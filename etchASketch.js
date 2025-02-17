@@ -16,6 +16,7 @@ function populateGrid(size) {
 
             gridBox.addEventListener('mouseenter', (e) => {
                 e.target.style.backgroundColor = 'black';
+                e.target.style.border = 'solid black 2px';
             })
         }
         mainContainer.appendChild(row);
@@ -28,8 +29,25 @@ window.addEventListener('resize', () => {
     const mainContainer = document.querySelector("#container");
     let smaller = window.innerHeight < window.innerWidth ? window.innerHeight : window.innerHeight > window.innerWidth ? window.innerWidth : window.innerHeight; 
 
-    mainContainer.style.height = `${smaller}px`;
-    mainContainer.style.width = `${smaller}px`;
+    mainContainer.style.height = `${smaller - 200}px`;
+    mainContainer.style.width = `${smaller - 200}px`;
+})
+
+const resizeButton = document.querySelector("#resize");
+const clearButton = document.querySelector("#clear");
+
+resizeButton.addEventListener('click', () => {
+    let size = prompt("How many squares per side do you want?");
+    const mainContainer = document.querySelector("#container");
+    mainContainer.innerHTML = '';
+    populateGrid(+size);
+})
+
+clearButton.addEventListener('click', () => {
+    const mainContainer = document.querySelector("#container");
+    let size = mainContainer.childElementCount;
+    mainContainer.innerHTML = '';
+    populateGrid(+size);
 })
 
 /* i fucking misread, it's supposed to be 16x16... would have not run into this problem...
