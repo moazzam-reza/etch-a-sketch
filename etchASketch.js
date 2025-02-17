@@ -1,33 +1,38 @@
 function populateGrid(size) {
     const mainContainer = document.querySelector("#container");
-    let windowArea = window.innerHeight * window.innerWidth;
-    let gridBoxSideLength = Math.sqrt(windowArea / size);
+    let smaller = window.innerHeight < window.innerWidth ? window.innerHeight : window.innerHeight > window.innerWidth ? window.innerWidth : window.innerHeight; 
+
+    mainContainer.style.height = `${smaller - 200}px`;
+    mainContainer.style.width = `${smaller - 200}px`;
 
     for (let i=0; i < size; i++) {
-        let gridBox = document.createElement("div");
-        gridBox.classList.add("grid-box");
-        gridBox.style.width = `${gridBoxSideLength}px`;
-        gridBox.style.height = `${gridBoxSideLength}px`;
+        let row = document.createElement("div");
+        row.classList.add("row");
+        for (let j=0; j < size; j++) {
+            let gridBox = document.createElement("div");
+            gridBox.classList.add("grid-box");
 
-        mainContainer.appendChild(gridBox);
+            row.appendChild(gridBox);
+
+            gridBox.addEventListener('mouseenter', (e) => {
+                e.target.style.backgroundColor = 'black';
+            })
+        }
+        mainContainer.appendChild(row);
     }
 
     return size;
 }
 
+window.addEventListener('resize', () => {
+    const mainContainer = document.querySelector("#container");
+    let smaller = window.innerHeight < window.innerWidth ? window.innerHeight : window.innerHeight > window.innerWidth ? window.innerWidth : window.innerHeight; 
+
+    mainContainer.style.height = `${smaller}px`;
+    mainContainer.style.width = `${smaller}px`;
+})
+
 /* i fucking misread, it's supposed to be 16x16... would have not run into this problem...
 if i had paid attention */
 
-let gridSize = populateGrid(200);
-
-window.addEventListener('resize', () => {
-    const mainContainer = document.querySelector("#container");
-
-    let windowArea = window.innerHeight * window.innerWidth;
-    let gridBoxSideLength = Math.sqrt(windowArea / gridSize);
-
-    for (let gridBox of mainContainer.childNodes) {
-        gridBox.style.width = `${gridBoxSideLength}px`;
-        gridBox.style.height = `${gridBoxSideLength}px`;
-    }
-})
+let gridSize = populateGrid(16);
