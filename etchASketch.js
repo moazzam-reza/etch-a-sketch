@@ -11,12 +11,31 @@ function populateGrid(size) {
         for (let j=0; j < size; j++) {
             let gridBox = document.createElement("div");
             gridBox.classList.add("grid-box");
+            gridBox.setAttribute("data-opacity", "0");
 
             row.appendChild(gridBox);
 
+            // For all black boxes
+            // gridBox.addEventListener('mouseenter', (e) => {
+            //     e.target.style.backgroundColor = 'black';
+            //     e.target.style.border = 'solid black 2px';
+            // })
+
+            // For multicoloured boxes
             gridBox.addEventListener('mouseenter', (e) => {
-                e.target.style.backgroundColor = 'black';
-                e.target.style.border = 'solid black 2px';
+                let randomRgbValues = [];
+                for (let i=0; i < 3; i++) {
+                    randomRgbValues.push(Math.floor(Math.random() * 255) + 1)
+                }
+                let [r, g, b] = randomRgbValues;
+                
+                let currentOpacity = parseFloat(gridBox.getAttribute("data-opacity"));
+                let opacity = Math.min(currentOpacity + 0.1, 1);
+                gridBox.setAttribute("data-opacity", opacity.toString());
+
+                e.target.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+                e.target.style.opacity = opacity;
+                e.target.style.border = `solid rgb(${r}, ${g}, ${b}) 2px`;
             })
         }
         mainContainer.appendChild(row);

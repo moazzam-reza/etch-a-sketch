@@ -14,6 +14,7 @@ body {
     flex-direction: column;
     box-sizing: border-box;
     padding: 2vh 2vw;
+    background-color: whitesmoke;
 }
 
 .grid-box {
